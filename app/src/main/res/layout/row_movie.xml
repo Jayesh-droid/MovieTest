@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="150dp"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+   <!-- <androidx.cardview.widget.CardView
+        android:id="@+id/movie_image_view"
+        android:layout_width="150dp"
+        android:layout_height="180dp"
+        app:cardCornerRadius="20dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@mipmap/ic_launcher"
+            android:scaleType="fitXY"/>
+
+    </androidx.cardview.widget.CardView>-->
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/movie_image_view"
+        android:src="@mipmap/ic_launcher"
+        android:layout_width="150dp"
+        android:layout_height="180dp"
+        android:scaleType="fitXY"
+        app:riv_corner_radius="20dip"
+        app:riv_border_width="0dip"
+        app:riv_mutate_background="true"
+        app:riv_oval="false" />
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/movie_name"
+        android:layout_below="@+id/movie_image_view"
+        android:gravity="center"
+        android:textSize="18sp"/>
+
+</RelativeLayout>

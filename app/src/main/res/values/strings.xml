@@ -3,4 +3,5 @@
     <string name="title_home">Home screen</string>
     <string name="title_saves">Saves screen</string>
     <string name="title_notifications">Notifications</string>
+    <string name="movie_name">Movie name</string>
 </resources>
