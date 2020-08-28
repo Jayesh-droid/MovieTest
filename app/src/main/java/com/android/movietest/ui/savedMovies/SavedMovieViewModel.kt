@@ -33,9 +33,8 @@ class SavedMovieViewModel(application: Application) : AndroidViewModel(applicati
 
             movieSelectList.postValue(db?.movieListDao()?.getSelectedMovies())
 
-            var dbMovieList : List<MovieSelectedModel>? = db?.movieListDao()?.getSelectedMovies()
-
-           /* if(dbMovieList != null) {
+         //var dbMovieList : List<MovieSelectedModel>? = db?.movieListDao()?.getSelectedMovies()
+            /* if(dbMovieList != null) {
                 Log.e("sizeofDBTable", dbMovieList.size.toString())
                 for(i in 1 until dbMovieList.size){
                     Log.e("DB Data", dbMovieList[i].original_title)
@@ -49,6 +48,7 @@ class SavedMovieViewModel(application: Application) : AndroidViewModel(applicati
             .subscribe()
 
         return movieSelectList
+
     }
 
 }

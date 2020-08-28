@@ -47,6 +47,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
             ?.subscribeOn(Schedulers.io())
             ?.observeOn(AndroidSchedulers.mainThread())
             ?.subscribeWith(object : DisposableSingleObserver<Json4Kotlin_Base?>() {
+
                 override fun onSuccess(response: Json4Kotlin_Base) {
                     seriesListResponse.postValue(response)
                 }
@@ -54,8 +55,11 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
                 override fun onError(e: Throwable) {
                     seriesListResponse.postValue(null)
                 }
+
             })
+
         return seriesListResponse
+
     }
 
     /* private val _text = MutableLiveData<String>().apply {
