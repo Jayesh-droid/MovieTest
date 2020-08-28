@@ -27,7 +27,11 @@ data class Results (
     @SerializedName("title") val title : String,
     @SerializedName("vote_average") val vote_average : Double,
     @SerializedName("overview") val overview : String,
-    @SerializedName("release_date") val release_date : String
+    @SerializedName("release_date") val release_date : String,
+    @SerializedName("original_name") val original_name : String,
+    @SerializedName("name") val name : String,
+    @SerializedName("origin_country") val origin_country : List<String>,
+    @SerializedName("first_air_date") val first_air_date : String,
 
 )
 

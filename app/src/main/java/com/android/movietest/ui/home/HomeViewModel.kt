@@ -14,6 +14,7 @@ import io.reactivex.schedulers.Schedulers
 class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
     var movieListResponse: MutableLiveData<Json4Kotlin_Base> = MutableLiveData()
+    var seriesListResponse: MutableLiveData<Json4Kotlin_Base> = MutableLiveData()
 
     @SuppressLint("CheckResult")
     fun getMovieData(): MutableLiveData<Json4Kotlin_Base> {
@@ -24,6 +25,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
             ?.subscribeOn(Schedulers.io())
             ?.observeOn(AndroidSchedulers.mainThread())
             ?.subscribeWith(object : DisposableSingleObserver<Json4Kotlin_Base?>() {
+
                 override fun onSuccess(response: Json4Kotlin_Base) {
                     movieListResponse.postValue(response)
                 }
@@ -31,10 +33,30 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
                 override fun onError(e: Throwable) {
                     movieListResponse.postValue(null)
                 }
+
             })
         return movieListResponse
     }
 
+    @SuppressLint("CheckResult")
+    fun getSeriesData(): MutableLiveData<Json4Kotlin_Base> {
+
+        val client: ApiInterface = ApiClient.getClient
+
+        client.getSeriesData()
+            ?.subscribeOn(Schedulers.io())
+            ?.observeOn(AndroidSchedulers.mainThread())
+            ?.subscribeWith(object : DisposableSingleObserver<Json4Kotlin_Base?>() {
+                override fun onSuccess(response: Json4Kotlin_Base) {
+                    seriesListResponse.postValue(response)
+                }
+
+                override fun onError(e: Throwable) {
+                    seriesListResponse.postValue(null)
+                }
+            })
+        return seriesListResponse
+    }
 
     /* private val _text = MutableLiveData<String>().apply {
         value = "This is Home Screen"

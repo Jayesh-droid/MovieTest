@@ -37,6 +37,7 @@
         android:text="@string/movie_name"
         android:layout_below="@+id/movie_image_view"
         android:gravity="center"
-        android:textSize="18sp"/>
+        android:textSize="18sp"
+        android:maxLines="2"/>
 
 </RelativeLayout>
