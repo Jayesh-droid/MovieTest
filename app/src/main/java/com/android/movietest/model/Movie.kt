@@ -10,6 +10,7 @@ data class Json4Kotlin_Base (
     @SerializedName("total_results") val total_results : Int,
     @SerializedName("total_pages") val total_pages : Int,
     @SerializedName("results") val results : List<Results>
+
 )
 
 data class Results (
@@ -34,4 +35,6 @@ data class Results (
     @SerializedName("first_air_date") val first_air_date : String,
 
 )
+
+
 

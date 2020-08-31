@@ -11,6 +11,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
 
+
 class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
     var movieListResponse: MutableLiveData<Json4Kotlin_Base> = MutableLiveData()
@@ -62,10 +63,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
     }
 
-    /* private val _text = MutableLiveData<String>().apply {
-        value = "This is Home Screen"
-    }
-    val text: LiveData<String> = _text*/
+
 }
 
 

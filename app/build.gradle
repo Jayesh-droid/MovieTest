@@ -24,6 +24,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -33,6 +34,22 @@ android {
         jvmTarget = '1.8'
     }
 
+    dataBinding {
+        enabled = true
+    }
+
+    sourceSets {
+        main {
+            java {
+                srcDir "${buildDir}/generated/source/kapt/main"
+            }
+        }
+        test {
+            java {
+                srcDir 'src/test/java'
+            }
+        }
+    }
 
 }
 
@@ -72,5 +89,8 @@ dependencies {
     //room library
     implementation "androidx.room:room-runtime:2.3.0-alpha02"
     kapt "androidx.room:room-compiler:2.3.0-alpha02"
+
+    kapt "com.android.databinding:compiler:3.2.0-alpha10"
+
 
 }
