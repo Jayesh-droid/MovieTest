@@ -4,13 +4,15 @@ import android.annotation.SuppressLint
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.android.movietest.roomdb.AppDatabase
-import com.android.movietest.roomdb.MovieDao
-import com.android.movietest.roomdb.MovieSelectedModel
+import androidx.lifecycle.viewModelScope
+import com.android.movietest.roomdb.*
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class SavedMovieViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -19,9 +21,11 @@ class SavedMovieViewModel(application: Application) : AndroidViewModel(applicati
     private val fruitList: MutableLiveData<List<String>>? = null
 
     var movieSelectList: MutableLiveData<List<MovieSelectedModel>> = MutableLiveData()
+    var seriesSelectList: MutableLiveData<List<SeriesSelectedModel>> = MutableLiveData()
 
     private var db: AppDatabase? = null
     private var movieDao: MovieDao? = null
+    private var seriesDao: SeriesDao? = null
 
     @SuppressLint("CheckResult")
     fun getMovieData(): MutableLiveData<List<MovieSelectedModel>> {
@@ -31,15 +35,7 @@ class SavedMovieViewModel(application: Application) : AndroidViewModel(applicati
             db = context?.let { AppDatabase.getAppDataBase(context = it) }
             movieDao = db?.movieListDao()
 
-            movieSelectList.postValue(db?.movieListDao()?.getSelectedMovies())
-
-         //var dbMovieList : List<MovieSelectedModel>? = db?.movieListDao()?.getSelectedMovies()
-            /* if(dbMovieList != null) {
-                Log.e("sizeofDBTable", dbMovieList.size.toString())
-                for(i in 1 until dbMovieList.size){
-                    Log.e("DB Data", dbMovieList[i].original_title)
-                }
-            }*/
+            movieSelectList.postValue(movieDao?.getSelectedMovies())
 
         }.doOnNext {
 
@@ -49,6 +45,69 @@ class SavedMovieViewModel(application: Application) : AndroidViewModel(applicati
 
         return movieSelectList
 
+    }
+
+    @SuppressLint("CheckResult")
+    fun getSeriesData(): MutableLiveData<List<SeriesSelectedModel>> {
+
+        Observable.fromCallable {
+
+            db = context?.let { AppDatabase.getAppDataBase(context = it) }
+            seriesDao = db?.seriesListDao()
+
+            seriesSelectList.postValue(seriesDao?.getSelectedSeries())
+
+        }.doOnNext {
+
+        }.subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe()
+
+        return seriesSelectList
+
+    }
+
+    fun deleteMovieModel(movieModel : MovieSelectedModel){
+
+        viewModelScope.launch(Dispatchers.IO){
+            Observable.fromCallable {
+
+                db = context?.let { AppDatabase.getAppDataBase(context = it) }
+
+                with(movieDao) {
+                    this?.deleteMovie(movieModel)
+                }
+
+                movieSelectList.postValue(movieDao?.getSelectedMovies())
+
+            }.doOnNext {
+
+            }.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe()
+        }
+    }
+
+
+    fun deleteSeriesModel(seriesSelectedModel : SeriesSelectedModel){
+
+        viewModelScope.launch(Dispatchers.IO){
+            Observable.fromCallable {
+
+                db = context?.let { AppDatabase.getAppDataBase(context = it) }
+
+                with(seriesDao) {
+                    this?.deleteSeries(seriesSelectedModel)
+                }
+
+                seriesSelectList.postValue(seriesDao?.getSelectedSeries())
+
+            }.doOnNext {
+
+            }.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe()
+        }
     }
 
 }

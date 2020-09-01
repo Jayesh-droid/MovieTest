@@ -4,16 +4,16 @@ import com.google.gson.annotations.SerializedName
 
 data class Movie (var name: String,var image_url: String)
 
-data class Json4Kotlin_Base (
+data class MovieResponse (
 
     @SerializedName("page") val page : Int,
     @SerializedName("total_results") val total_results : Int,
     @SerializedName("total_pages") val total_pages : Int,
-    @SerializedName("results") val results : List<Results>
+    @SerializedName("results") val results : List<MovieModel>
 
 )
 
-data class Results (
+data class MovieModel (
 
     @SerializedName("popularity") val popularity : Double,
     @SerializedName("vote_count") val vote_count : Int,
@@ -32,7 +32,7 @@ data class Results (
     @SerializedName("original_name") val original_name : String,
     @SerializedName("name") val name : String,
     @SerializedName("origin_country") val origin_country : List<String>,
-    @SerializedName("first_air_date") val first_air_date : String,
+    @SerializedName("first_air_date") val first_air_date : String
 
 )
 

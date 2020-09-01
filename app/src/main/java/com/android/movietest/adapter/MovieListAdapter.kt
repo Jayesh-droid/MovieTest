@@ -1,19 +1,12 @@
 package com.android.movietest.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.android.movietest.R
 import com.android.movietest.databinding.RowMovieBinding
-import com.android.movietest.model.Results
-import com.makeramen.roundedimageview.RoundedImageView
-import com.squareup.picasso.Picasso
+import com.android.movietest.model.MovieModel
 
-class MovieListAdapter(private var movieList: List<Results>,
+class MovieListAdapter(private var movieList: List<MovieModel>,
                        val listener: OnItemClickListener) :
     RecyclerView.Adapter<MovieListAdapter.CustomViewHolder>() {
 
@@ -39,7 +32,7 @@ class MovieListAdapter(private var movieList: List<Results>,
 
    inner class CustomViewHolder(val binding: RowMovieBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(result: Results,position: Int) {
+        fun bind(result: MovieModel, position: Int) {
             binding.result = result
             binding.executePendingBindings()
             binding.ivStar.setOnClickListener {
@@ -53,8 +46,8 @@ class MovieListAdapter(private var movieList: List<Results>,
     }
 
     interface OnItemClickListener {
-        fun onStarClicked(result: Results)
-        fun onItemClicked(result: Results)
+        fun onStarClicked(result: MovieModel)
+        fun onItemClicked(result: MovieModel)
     }
 
 }

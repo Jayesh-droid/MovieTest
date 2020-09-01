@@ -1,50 +1,50 @@
 package com.android.movietest.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.android.movietest.R
-import com.android.movietest.model.Results
-import com.makeramen.roundedimageview.RoundedImageView
-import com.squareup.picasso.Picasso
+import com.android.movietest.databinding.RowSeriesBinding
+import com.android.movietest.model.MovieModel
 
-class SeriesListAdapter (private var seriesList: List<Results>,var context: Context) :
+class SeriesListAdapter(private var seriesList: List<MovieModel>,
+                        val listener: OnItemClickListener) :
     RecyclerView.Adapter<SeriesListAdapter.CustomViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): SeriesListAdapter.CustomViewHolder {
-        val v = LayoutInflater.from(parent.context).inflate(R.layout.row_movie, parent, false)
-        return SeriesListAdapter.CustomViewHolder(v)
+
+        return CustomViewHolder(RowSeriesBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
     override fun onBindViewHolder(holder: SeriesListAdapter.CustomViewHolder, position: Int) {
-        val image_base_url: String = "https://image.tmdb.org/t/p/w200"
-        holder.bindItems()
-        holder.name.text = seriesList[position].original_name
-        Picasso.get()
-            .load(image_base_url + seriesList[position].poster_path)
-            .into(holder.imageView)
+
+        holder.bind(seriesList[position],position)
+
     }
 
     override fun getItemCount(): Int {
         return seriesList.size
     }
 
-    class CustomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+   inner class CustomViewHolder(val binding: RowSeriesBinding) : RecyclerView.ViewHolder(binding.root){
 
-        lateinit var name: TextView
-        lateinit var imageView: RoundedImageView
-
-        fun bindItems() {
-
-            name = itemView.findViewById(R.id.tv_name) as TextView
-            imageView = itemView.findViewById(R.id.movie_image_view) as RoundedImageView
+        fun bind(series : MovieModel,postion : Int) {
+            binding.series = series;
+            binding.executePendingBindings()
+            binding.ivStar.setOnClickListener {
+                listener.onStarClicked(seriesList[postion])
+            }
+            itemView.setOnClickListener {
+                listener.onItemClicked(seriesList[postion])
+            }
 
         }
 
+    }
+
+    interface OnItemClickListener {
+        fun onStarClicked(result: MovieModel)
+        fun onItemClicked(result: MovieModel)
     }
 }

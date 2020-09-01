@@ -6,11 +6,12 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 
-@Database(entities = [MovieSelectedModel::class], version = 1)
+@Database(entities = [MovieSelectedModel::class,SeriesSelectedModel::class], version = 1)
 @TypeConverters(DateTypeConverter::class)
 abstract class AppDatabase : RoomDatabase() {
 
-   public abstract fun movieListDao(): MovieDao
+   abstract fun movieListDao(): MovieDao
+    abstract fun seriesListDao(): SeriesDao
 
     companion object {
 
